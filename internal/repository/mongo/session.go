@@ -38,6 +38,17 @@ func (r *SessionRepository) Read(id string) (*entities.Session, error) {
 	return toSessionEntity(&session), nil
 }
 
+func (r *SessionRepository) ReadByToken(token string) (*entities.Session, error) {
+	var session Session
+	if err := r.db.FindOne(context.Background(), bson.M{"token": token}).Decode(&session); err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return nil, repositories.ErrSessionNotFound
+		}
+		return nil, err
+	}
+	return toSessionEntity(&session), nil
+}
+
 func (r *SessionRepository) ReadAllByOwner(owner string) ([]*entities.Session, error) {
 	objectID, _ := primitive.ObjectIDFromHex(owner)
 
