@@ -1,9 +1,14 @@
 package main
 
 import (
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/turbekoff/todo/internal/config"
+	"github.com/turbekoff/todo/internal/repository/mongo"
 	"golang.org/x/exp/slog"
 )
 
@@ -39,5 +44,22 @@ func main() {
 	if err != nil {
 		log.Error("failed to load config", Error(err))
 		return
+	}
+
+	client, err := mongo.NewConnection(&cfg.Mongo)
+	if err != nil {
+		log.Error("failed to connect database", Error(err))
+		return
+	}
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGTSTP)
+	<-quit
+
+	ctx, close := context.WithTimeout(context.Background(), 10*time.Second)
+	defer close()
+
+	if err := client.Disconnect(ctx); err != nil {
+		log.Error("failed to close database connection", Error(err))
 	}
 }
