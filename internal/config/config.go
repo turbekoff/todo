@@ -1,6 +1,9 @@
 package config
 
 import (
+	"errors"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/ilyakaznacheev/cleanenv"
@@ -35,9 +38,33 @@ type Config struct {
 	Mongo          MongoConfig `env-prefix:"MONGO_"`
 }
 
+func loadPath() (string, error) {
+	path := os.Getenv("CONFIG_PATH")
+	if path == "" {
+		return path, nil
+	}
+
+	root, err := os.Getwd()
+	if err != nil {
+		return "", errors.New("root path not found")
+	}
+	return filepath.Join(root, path), nil
+}
+
 func Load() (Config, error) {
+	path, err := loadPath()
+	if err != nil {
+		return Config{DebugMode: M_NULL}, err
+	}
+
 	var config Config
-	if err := cleanenv.ReadEnv(&config); err != nil {
+	if path != "" {
+		err = cleanenv.ReadConfig(path, &config)
+	} else {
+		err = cleanenv.ReadEnv(&config)
+	}
+
+	if err != nil {
 		return Config{DebugMode: M_NULL}, err
 	}
 	return config, nil
