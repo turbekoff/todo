@@ -2,7 +2,10 @@ module github.com/turbekoff/todo
 
 go 1.20
 
-require github.com/ilyakaznacheev/cleanenv v1.5.0
+require (
+	github.com/ilyakaznacheev/cleanenv v1.5.0
+	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
+)
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
