@@ -1,0 +1,30 @@
+services:
+    todo:
+        container_name: api
+        build:
+            context: .
+            dockerfile: ./build/api/Dockerfile
+        ports:
+            - 80:80
+        depends_on:
+            - mongo
+        env_file:
+            - ./configs/api/development.env
+        networks:
+            - todo_api
+    mongo:
+        image: mongo
+        container_name: api_mongo
+        ports:
+            - 27017:27017
+        restart: always
+        environment:
+            - MONGODB_DATABASE=todo
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=fazMkYMRmJgqLrwejE5tl5Ze
+        networks:
+            - todo_api
+
+networks:
+    todo_api:
+        driver: bridge

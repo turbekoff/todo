@@ -12,6 +12,7 @@ local:
 
 development:
 	echo "Starting docker environment"
+	docker-compose -f docker-compose.development.yml up --build
 
 clean:
 	docker system prune -f
