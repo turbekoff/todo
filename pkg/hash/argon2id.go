@@ -17,7 +17,7 @@ type Hasher interface {
 
 var (
 	ErrInvalid      = errors.New("invalid hash format")
-	ErrMismatched   = errors.New("hash doesn't match")
+	ErrMismatched   = errors.New("password doesn't match")
 	ErrIncompatible = errors.New("incompatible version")
 )
 

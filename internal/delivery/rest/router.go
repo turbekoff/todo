@@ -28,8 +28,14 @@ func NewRouter(
 		r.Use(middlewares.Auth(sessionService))
 		r.Post("/api/v1/logout", handlers.NewLogout(log, sessionService))
 		r.Get("/api/v1/profile", handlers.NewProfile(log, userService))
-		r.Post("/api/v1/profile", handlers.NewUpdateProfile(log, userService))
-		r.Post("/api/v1/delete", handlers.NewDelete(log, userService))
+		r.Put("/api/v1/profile", handlers.NewUpdateProfile(log, userService))
+		r.Delete("/api/v1/profile", handlers.NewDelete(log, userService))
+
+		r.Post("/api/v1/task", handlers.NewCreateTask(log, taskService))
+		r.Get("/api/v1/task", handlers.NewReadTasks(log, taskService))
+		r.Get("/api/v1/task/{id}", handlers.NewReadTask(log, taskService))
+		r.Put("/api/v1/task/{id}", handlers.NewUpdateTask(log, taskService))
+		r.Delete("/api/v1/task/{id}", handlers.NewDeleteTask(log, taskService))
 	})
 
 	router.Group(func(r chi.Router) {
