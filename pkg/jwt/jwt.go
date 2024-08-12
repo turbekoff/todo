@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type Manager struct {
@@ -17,9 +17,9 @@ func NewManager(signingKey string) *Manager {
 }
 
 func (m *Manager) Generate(id string, ttl time.Duration) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.StandardClaims{
+	token := jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.RegisteredClaims{
 		Subject:   id,
-		ExpiresAt: time.Now().Add(ttl).Unix(),
+		ExpiresAt: jwt.NewNumericDate(time.Now().Add(ttl)),
 	})
 
 	return token.SignedString([]byte(m.signingKey))

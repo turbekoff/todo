@@ -3,15 +3,19 @@ module github.com/turbekoff/todo
 go 1.20
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/go-chi/chi v1.5.5
+	github.com/go-chi/render v1.0.3
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	go.mongodb.org/mongo-driver v1.16.1
 	golang.org/x/crypto v0.26.0
 	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
+	golang.org/x/net v0.28.0
 )
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/ajg/form v1.5.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
