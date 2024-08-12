@@ -1,6 +1,24 @@
 # todo
 This is a simple REST API written in the Golang programming language using [chi](https://github.com/go-chi/chi) as a router and MongoDB for data storage. It allows users to manage tasks efficiently.
 
+## Usage
+1. Download or clone the code from this repository if it doesn't exist.
+2. Navigate to the directory containing the code in the terminal or command prompt.
+3. Create a configuration file in ./configs/api/development.env, where
+```
+DEBUG_MODE=development
+PASSWORD_PEPPER=EQUNbPFfWyJM
+JWT_SIGNING_KEY=uwhdjroJClrharFlfBeatxYn
+HTTP_PORT=80
+MONGO_USER=admin
+MONGO_PASSWORD=fazMkYMRmJgqLrwejE5tl5Ze
+MONGO_DATABASE=todo
+MONGO_URI=mongodb://localhost:27017/todo?ssl=false&authSource=admin
+```
+4.  Run the program using the following command:
+```
+make development
+```
 
 ## Managing Configurations
 When the api starts, it loads configuration from the .env file specified in the CONFIG_PATH environment variable, or from local variables if the CONFIG_PATH variable is empty.
